@@ -361,7 +361,7 @@
                         <li>Advanced memory &amp; context</li>
                         <li>Priority support</li>
                     </ul>
-                    <a href="#waitlist" class="btn-primary">Join Waitlist</a>
+                    <a href="#" onclick="checkout('pro')" class="btn-primary">Subscribe — $49/mo</a>
                 </div>
                 <div class="price-card">
                     <h3>Enterprise</h3>
@@ -374,7 +374,7 @@
                         <li>Skill marketplace access</li>
                         <li>Dedicated support</li>
                     </ul>
-                    <a href="#waitlist" class="btn-primary">Contact Us</a>
+                    <a href="#" onclick="checkout('enterprise')" class="btn-primary">Subscribe — $199/mo</a>
                 </div>
             </div>
         </div>
@@ -405,6 +405,37 @@
     </footer>
 
     <script>
+        async function checkout(tier) {
+            event.preventDefault();
+            try {
+                const res = await fetch('/api/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tier })
+                });
+                const data = await res.json();
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert(data.error || 'Failed to start checkout. Please try again.');
+                }
+            } catch {
+                alert('Network error. Please try again.');
+            }
+        }
+
+        // Check for checkout result
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('checkout') === 'success') {
+            setTimeout(() => {
+                const msg = document.getElementById('waitlistMsg');
+                if (msg) {
+                    msg.textContent = "Payment successful! Welcome to Allsyn. We'll be in touch with your access details.";
+                    msg.style.color = '#28c840';
+                }
+            }, 100);
+        }
+
         document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
