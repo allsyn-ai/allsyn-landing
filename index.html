@@ -405,19 +405,45 @@
     </footer>
 
     <script>
-        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
             const msg = document.getElementById('waitlistMsg');
+            const btn = this.querySelector('button[type="submit"]');
+
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 msg.textContent = 'Please enter a valid email.';
                 msg.style.color = '#ff9ea4';
                 return;
             }
-            // TODO: Wire to backend/Beehiiv/Mailchimp
-            msg.textContent = "You're on the list. We'll be in touch.";
-            msg.style.color = '#28c840';
-            this.reset();
+
+            btn.disabled = true;
+            btn.textContent = 'Joining...';
+            msg.textContent = '';
+
+            try {
+                const res = await fetch('/api/waitlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, tier: 'pro' })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    msg.textContent = data.message;
+                    msg.style.color = '#28c840';
+                    this.reset();
+                } else {
+                    msg.textContent = data.error || 'Something went wrong.';
+                    msg.style.color = '#ff9ea4';
+                }
+            } catch {
+                msg.textContent = 'Network error. Please try again.';
+                msg.style.color = '#ff9ea4';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Join Waitlist';
+            }
         });
     </script>
 </body>
