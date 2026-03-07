@@ -70,8 +70,8 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-[160px]" id="features">
-      <div className="container">
+    <section className="py-24 lg:py-32" id="features">
+      <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div
             className="text-xs tracking-[3px] uppercase mb-5 text-center"

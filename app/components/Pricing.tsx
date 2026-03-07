@@ -40,8 +40,8 @@ export default function Pricing() {
   }
 
   return (
-    <section className="py-[160px]" id="pricing">
-      <div className="container">
+    <section className="py-24 lg:py-32" id="pricing">
+      <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div
             className="text-xs tracking-[3px] uppercase mb-5 text-center"
@@ -64,7 +64,7 @@ export default function Pricing() {
             Start free. Scale when ready.
           </h2>
         </ScrollReveal>
-        <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1100px] mx-auto items-start">
+        <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           {/* Core */}
           <ScrollReveal delay={150}>
             <TiltCard intensity={6}>

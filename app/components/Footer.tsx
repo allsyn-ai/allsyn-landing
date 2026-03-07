@@ -6,7 +6,7 @@ export default function Footer() {
       className="py-12 text-center"
       style={{ borderTop: "1px solid var(--color-bg-card-border)" }}
     >
-      <div className="container">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="flex gap-7 justify-center mb-4.5">
           <a
             href="https://github.com/allsyn-ai"

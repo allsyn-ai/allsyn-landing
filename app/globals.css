@@ -164,7 +164,7 @@ body {
 /* Terminal */
 .terminal {
   max-width: 720px;
-  margin: 100px auto 0;
+  margin: 0 auto;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
@@ -332,7 +332,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links { display: none !important; }
-  .hero-section { padding: 60px 0 40px !important; }
+  .hero-section { min-height: auto !important; padding: 80px 0 40px !important; }
   .feature-grid { grid-template-columns: 1fr !important; }
   .terminal-code { font-size: 11px !important; padding: 16px !important; }
   .terminal-line-num { display: none !important; }

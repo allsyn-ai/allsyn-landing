@@ -8,7 +8,7 @@ import ScrollReveal from "./effects/ScrollReveal";
 
 export default function Hero() {
   return (
-    <section className="hero-section relative pt-[160px] pb-[140px] text-center">
+    <section className="hero-section relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
       {/* Dot grid background */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -24,7 +24,7 @@ export default function Hero() {
       />
       <ParticleField />
       <GradientMesh />
-      <div className="container relative z-1">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-24">
         <ScrollReveal>
           <div
             className="inline-flex items-center gap-2 px-4.5 py-2 rounded-3xl text-xs mb-10 backdrop-blur-[10px]"
@@ -48,10 +48,9 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h1
-            className="font-bold mb-12 leading-[1.12] tracking-[-0.03em]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-[-0.03em]"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(42px, 7vw, 76px)",
               background:
                 "linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.65) 100%)",
               WebkitBackgroundClip: "text",
@@ -77,15 +76,15 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-lg max-w-[660px] mx-auto mb-16 leading-[1.8]"
+            className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
             style={{ color: "var(--color-text-dim)" }}
           >
             Multi-model routing, native monitoring, Discord&nbsp;C2, and
-            voice&nbsp;&mdash; all open&#8209;source. No vendor lock&#8209;in.
+            voice &mdash; all open&#8209;source. No vendor lock&#8209;in.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={300}>
-          <div className="flex gap-5 justify-center flex-wrap">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <MagneticButton>
               <a href="#waitlist" className="btn-primary">
                 Join the Waitlist
@@ -102,7 +101,9 @@ export default function Hero() {
           </div>
         </ScrollReveal>
         <ScrollReveal delay={400}>
-          <Terminal />
+          <div className="mt-20">
+            <Terminal />
+          </div>
         </ScrollReveal>
       </div>
     </section>

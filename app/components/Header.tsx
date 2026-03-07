@@ -12,7 +12,7 @@ export default function Header() {
         WebkitBackdropFilter: "blur(20px)",
       }}
     >
-      <div className="container flex items-center justify-between py-5">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between py-5">
         <a href="/" className="flex items-center gap-2.5 no-underline cursor-pointer">
           <div
             className="w-8 h-8 flex items-center justify-center rounded-lg font-bold text-sm text-black"
