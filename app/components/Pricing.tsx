@@ -64,7 +64,7 @@ export default function Pricing() {
             Start free. Scale when ready.
           </h2>
         </ScrollReveal>
-        <div className="pricing-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-5 max-w-[920px] mx-auto items-start">
+        <div className="pricing-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 max-w-[1000px] mx-auto items-start">
           {/* Core */}
           <ScrollReveal delay={150}>
             <TiltCard intensity={6}>

@@ -96,7 +96,7 @@ export default function Features() {
             Actually delivered.
           </h2>
         </ScrollReveal>
-        <div className="feature-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-5">
+        <div className="feature-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
           {features.map((f, i) => (
             <ScrollReveal key={f.title} delay={150 + i * 80}>
               <TiltCard>

@@ -77,12 +77,18 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-lg max-w-[600px] mx-auto mb-10 leading-[1.7]"
+            className="text-lg max-w-[600px] mx-auto mb-4 leading-[1.8]"
             style={{ color: "var(--color-text-dim)" }}
           >
             Allsyn is a multi-model agent orchestrator with native monitoring,
             Discord command &amp; control, and voice integration. Open-source
-            core. No vendor lock-in. Replace OpenClaw with something you own.
+            core.
+          </p>
+          <p
+            className="text-lg max-w-[600px] mx-auto mb-12 leading-[1.8]"
+            style={{ color: "var(--color-text-dim)" }}
+          >
+            No vendor lock-in. Replace OpenClaw with something you own.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={300}>

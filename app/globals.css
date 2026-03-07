@@ -215,7 +215,7 @@ body {
 .terminal-code .status-ok { color: var(--color-green); }
 .terminal-code .label { color: var(--color-text-dimmer); }
 .terminal-code .url { color: var(--color-yellow); }
-.terminal-line { display: flex; gap: 0; }
+.terminal-line { display: flex; gap: 8px; }
 .terminal-line-num {
   user-select: none;
   min-width: 28px;
@@ -226,7 +226,7 @@ body {
 
 /* Feature cards */
 .feature-card {
-  padding: 30px;
+  padding: 36px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
@@ -274,7 +274,7 @@ body {
 
 /* Price cards */
 .price-card {
-  padding: 36px;
+  padding: 40px 36px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
