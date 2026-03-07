@@ -64,7 +64,7 @@ export default function Pricing() {
             Start free. Scale when ready.
           </h2>
         </ScrollReveal>
-        <div className="pricing-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 max-w-[1060px] mx-auto items-start">
+        <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-8 max-w-[1100px] mx-auto items-start">
           {/* Core */}
           <ScrollReveal delay={150}>
             <TiltCard intensity={6}>
@@ -251,7 +251,7 @@ export default function Pricing() {
                   className="text-[44px] font-bold my-4.5 tracking-[-0.02em]"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
-                  Starting at $199
+                  $199
                   <span
                     className="text-base font-normal"
                     style={{
@@ -266,7 +266,7 @@ export default function Pricing() {
                   className="text-sm mb-7"
                   style={{ color: "var(--color-text-dim)" }}
                 >
-                  For teams and agencies. Custom pricing based on needs.
+                  For teams and agencies. Custom plans available.
                 </div>
                 <ul className="list-none text-left mb-8">
                   <li

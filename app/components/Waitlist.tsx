@@ -94,7 +94,7 @@ export default function Waitlist() {
         </ScrollReveal>
         <ScrollReveal delay={300}>
           <form
-            className="waitlist-form flex gap-3 max-w-[480px] mx-auto mt-7 flex-wrap justify-center"
+            className="waitlist-form flex gap-3 max-w-[540px] mx-auto mt-10 flex-wrap justify-center"
             onSubmit={handleSubmit}
           >
             <input

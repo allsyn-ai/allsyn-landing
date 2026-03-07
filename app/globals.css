@@ -333,7 +333,7 @@ body {
 @media (max-width: 768px) {
   .nav-links { display: none !important; }
   .hero-section { padding: 60px 0 40px !important; }
-  .feature-grid, .pricing-grid { grid-template-columns: 1fr !important; }
+  .feature-grid { grid-template-columns: 1fr !important; }
   .terminal-code { font-size: 11px !important; padding: 16px !important; }
   .terminal-line-num { display: none !important; }
 }

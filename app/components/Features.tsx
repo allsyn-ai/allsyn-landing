@@ -74,7 +74,7 @@ export default function Features() {
       <div className="container">
         <ScrollReveal>
           <div
-            className="text-xs tracking-[3px] uppercase mb-5"
+            className="text-xs tracking-[3px] uppercase mb-5 text-center"
             style={{
               fontFamily: "var(--font-mono)",
               color: "var(--color-cyan)",
@@ -85,7 +85,7 @@ export default function Features() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h2
-            className="font-bold mb-16 tracking-[-0.02em] leading-[1.15]"
+            className="font-bold mb-16 tracking-[-0.02em] leading-[1.15] text-center"
             style={{
               fontFamily: "var(--font-heading)",
               fontSize: "clamp(30px, 4.5vw, 42px)",
@@ -96,7 +96,7 @@ export default function Features() {
             Actually delivered.
           </h2>
         </ScrollReveal>
-        <div className="feature-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10">
+        <div className="feature-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((f, i) => (
             <ScrollReveal key={f.title} delay={150 + i * 80}>
               <TiltCard>
