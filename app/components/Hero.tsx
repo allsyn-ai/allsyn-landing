@@ -77,11 +77,11 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-xl max-w-[520px] mx-auto mb-16 leading-[1.75]"
+            className="text-lg max-w-[660px] mx-auto mb-16 leading-[1.8]"
             style={{ color: "var(--color-text-dim)" }}
           >
-            Multi-model routing, native monitoring, Discord&nbsp;C2, and voice
-            &mdash; all open&#8209;source. No vendor lock&#8209;in.
+            Multi-model routing, native monitoring, Discord&nbsp;command&nbsp;&amp;&nbsp;control,
+            and voice &mdash; all&nbsp;open&#8209;source. No&nbsp;vendor&nbsp;lock&#8209;in.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={300}>
