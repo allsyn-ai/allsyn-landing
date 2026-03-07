@@ -40,11 +40,11 @@ export default function Pricing() {
   }
 
   return (
-    <section className="py-[120px]" id="pricing">
+    <section className="py-[160px]" id="pricing">
       <div className="container">
         <ScrollReveal>
           <div
-            className="text-xs tracking-[3px] uppercase mb-3.5 text-center"
+            className="text-xs tracking-[3px] uppercase mb-5 text-center"
             style={{
               fontFamily: "var(--font-mono)",
               color: "var(--color-cyan)",
@@ -55,16 +55,16 @@ export default function Pricing() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h2
-            className="font-bold mb-14 tracking-[-0.01em] leading-[1.2] text-center"
+            className="font-bold mb-16 tracking-[-0.02em] leading-[1.15] text-center"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(28px, 4vw, 36px)",
+              fontSize: "clamp(30px, 4.5vw, 42px)",
             }}
           >
             Start free. Scale when ready.
           </h2>
         </ScrollReveal>
-        <div className="pricing-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-8 max-w-[1000px] mx-auto items-start">
+        <div className="pricing-grid grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 max-w-[1060px] mx-auto items-start">
           {/* Core */}
           <ScrollReveal delay={150}>
             <TiltCard intensity={6}>

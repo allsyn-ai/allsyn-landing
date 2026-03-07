@@ -70,11 +70,11 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-[120px]" id="features">
+    <section className="py-[160px]" id="features">
       <div className="container">
         <ScrollReveal>
           <div
-            className="text-xs tracking-[3px] uppercase mb-3.5"
+            className="text-xs tracking-[3px] uppercase mb-5"
             style={{
               fontFamily: "var(--font-mono)",
               color: "var(--color-cyan)",
@@ -85,10 +85,10 @@ export default function Features() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h2
-            className="font-bold mb-14 tracking-[-0.01em] leading-[1.2]"
+            className="font-bold mb-16 tracking-[-0.02em] leading-[1.15]"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(28px, 4vw, 36px)",
+              fontSize: "clamp(30px, 4.5vw, 42px)",
             }}
           >
             Everything OpenClaw promised.
@@ -96,7 +96,7 @@ export default function Features() {
             Actually delivered.
           </h2>
         </ScrollReveal>
-        <div className="feature-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-8">
+        <div className="feature-grid grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10">
           {features.map((f, i) => (
             <ScrollReveal key={f.title} delay={150 + i * 80}>
               <TiltCard>

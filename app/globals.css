@@ -110,16 +110,16 @@ body {
 
 /* Container */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 32px;
   position: relative;
   z-index: 1;
 }
 
 /* Buttons */
 .btn-primary {
-  padding: 14px 32px;
+  padding: 16px 36px;
   background: linear-gradient(135deg, var(--color-cyan), var(--color-blue));
   border: none;
   border-radius: var(--radius-md);
@@ -140,7 +140,7 @@ body {
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
 }
 .btn-secondary {
-  padding: 14px 32px;
+  padding: 16px 36px;
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-md);
@@ -163,8 +163,8 @@ body {
 
 /* Terminal */
 .terminal {
-  max-width: 700px;
-  margin: 80px auto 0;
+  max-width: 720px;
+  margin: 100px auto 0;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
@@ -199,7 +199,7 @@ body {
 .terminal-dot.yellow { background: var(--color-yellow); }
 .terminal-dot.green { background: var(--color-green); }
 .terminal-code {
-  padding: 24px;
+  padding: 28px 32px;
   font-family: var(--font-mono);
   font-size: 13px;
   line-height: 1.9;
@@ -226,7 +226,7 @@ body {
 
 /* Feature cards */
 .feature-card {
-  padding: 40px;
+  padding: 44px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
@@ -274,7 +274,7 @@ body {
 
 /* Price cards */
 .price-card {
-  padding: 40px 36px;
+  padding: 48px 40px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);

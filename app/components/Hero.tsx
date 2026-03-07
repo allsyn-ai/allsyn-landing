@@ -8,7 +8,7 @@ import ScrollReveal from "./effects/ScrollReveal";
 
 export default function Hero() {
   return (
-    <section className="hero-section relative pt-[120px] pb-[100px] text-center">
+    <section className="hero-section relative pt-[160px] pb-[140px] text-center">
       {/* Dot grid background */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -27,7 +27,7 @@ export default function Hero() {
       <div className="container relative z-1">
         <ScrollReveal>
           <div
-            className="inline-flex items-center gap-2 px-4.5 py-2 rounded-3xl text-xs mb-7 backdrop-blur-[10px]"
+            className="inline-flex items-center gap-2 px-4.5 py-2 rounded-3xl text-xs mb-10 backdrop-blur-[10px]"
             style={{
               background: "var(--color-bg-card)",
               border: "1px solid var(--color-bg-card-border)",
@@ -48,10 +48,10 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h1
-            className="font-bold mb-8 leading-[1.1] tracking-[-0.02em]"
+            className="font-bold mb-12 leading-[1.12] tracking-[-0.03em]"
             style={{
               fontFamily: "var(--font-heading)",
-              fontSize: "clamp(38px, 6vw, 68px)",
+              fontSize: "clamp(42px, 7vw, 76px)",
               background:
                 "linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.65) 100%)",
               WebkitBackgroundClip: "text",
@@ -77,7 +77,7 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-lg max-w-[620px] mx-auto mb-5 leading-[1.85]"
+            className="text-xl max-w-[640px] mx-auto mb-6 leading-[1.8]"
             style={{ color: "var(--color-text-dim)" }}
           >
             Allsyn is a multi-model agent orchestrator with native monitoring,
@@ -85,14 +85,14 @@ export default function Hero() {
             core.
           </p>
           <p
-            className="text-lg max-w-[620px] mx-auto mb-14 leading-[1.85]"
+            className="text-xl max-w-[640px] mx-auto mb-16 leading-[1.8]"
             style={{ color: "var(--color-text-dim)" }}
           >
             No vendor lock-in. Replace OpenClaw with something you own.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={300}>
-          <div className="flex gap-4 justify-center flex-wrap">
+          <div className="flex gap-5 justify-center flex-wrap">
             <MagneticButton>
               <a href="#waitlist" className="btn-primary">
                 Join the Waitlist
