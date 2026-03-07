@@ -11,44 +11,106 @@
     <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --cyan: #00d4ff;
-            --cyan-dim: #00d4ff33;
+            --cyan-dim: rgba(0, 212, 255, 0.12);
+            --cyan-glow: rgba(0, 212, 255, 0.25);
             --blue: #0066ff;
             --bg-primary: #06060f;
-            --bg-card: rgba(255,255,255,0.03);
-            --bg-card-border: rgba(255,255,255,0.08);
+            --bg-secondary: #0a0a1a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --bg-card-border-hover: rgba(0, 212, 255, 0.25);
             --text: #e8e8e8;
-            --text-dim: rgba(255,255,255,0.5);
-            --text-dimmer: rgba(255,255,255,0.3);
+            --text-dim: rgba(255, 255, 255, 0.55);
+            --text-dimmer: rgba(255, 255, 255, 0.3);
+            --green: #28c840;
+            --red: #ff5f57;
+            --yellow: #febc2e;
+            --error: #ff9ea4;
             --mono: 'JetBrains Mono', monospace;
-            --sans: 'Inter', -apple-system, sans-serif;
+            --heading: 'Space Grotesk', sans-serif;
+            --body: 'DM Sans', -apple-system, sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition-fast: 0.2s ease;
+            --transition-med: 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         body {
-            font-family: var(--sans);
+            font-family: var(--body);
             background: var(--bg-primary);
             color: var(--text);
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* Ambient glow */
-        body::before {
-            content: '';
+        /* Focus-visible for keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* Ambient gradient orbs */
+        .ambient-orb {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 20%, rgba(0,212,255,0.04) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(0,102,255,0.03) 0%, transparent 50%);
+            border-radius: 50%;
+            filter: blur(120px);
             pointer-events: none;
             z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+        .ambient-orb--1 {
+            width: 600px;
+            height: 600px;
+            top: -10%;
+            left: 15%;
+            background: rgba(0, 212, 255, 0.06);
+            animation-delay: 0s;
+        }
+        .ambient-orb--2 {
+            width: 500px;
+            height: 500px;
+            top: 50%;
+            right: -5%;
+            background: rgba(0, 102, 255, 0.05);
+            animation-delay: -7s;
+            animation-duration: 25s;
+        }
+        .ambient-orb--3 {
+            width: 400px;
+            height: 400px;
+            bottom: 10%;
+            left: -5%;
+            background: rgba(0, 212, 255, 0.04);
+            animation-delay: -14s;
+            animation-duration: 22s;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(-20px, 30px) scale(0.95); }
+            75% { transform: translate(15px, 15px) scale(1.02); }
         }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
@@ -58,13 +120,14 @@
             padding: 20px 0;
             border-bottom: 1px solid var(--bg-card-border);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(6,6,15,0.8);
+            background: rgba(6, 6, 15, 0.85);
         }
         nav .container { display: flex; align-items: center; justify-content: space-between; }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
         .logo-mark {
             width: 32px; height: 32px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
@@ -73,180 +136,468 @@
             font-weight: 700; font-size: 14px; color: #000;
             font-family: var(--mono);
         }
-        .logo-text { font-family: var(--mono); font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: 1px; }
+        .logo-text {
+            font-family: var(--heading);
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+            letter-spacing: 2px;
+        }
         .nav-links { display: flex; gap: 32px; align-items: center; }
-        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+            cursor: pointer;
+            padding: 8px 0;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
         .nav-links a:hover { color: var(--text); }
         .btn-nav {
-            padding: 8px 20px;
+            padding: 10px 22px;
             background: var(--cyan-dim);
-            border: 1px solid rgba(0,212,255,0.3);
-            border-radius: 6px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: var(--radius-sm);
             color: var(--cyan);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all var(--transition-fast);
             text-decoration: none;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
-        .btn-nav:hover { background: rgba(0,212,255,0.15); }
+        .btn-nav:hover { background: rgba(0, 212, 255, 0.18); }
 
         /* Hero */
-        .hero { padding: 100px 0 80px; text-align: center; }
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Dot grid background */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .container { position: relative; z-index: 1; }
+
         .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
-            border-radius: 20px;
+            border-radius: 24px;
             font-family: var(--mono);
             font-size: 12px;
             color: var(--cyan);
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
         .hero h1 {
-            font-size: clamp(36px, 6vw, 64px);
+            font-family: var(--heading);
+            font-size: clamp(38px, 6vw, 68px);
             font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+            line-height: 1.08;
+            margin-bottom: 22px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.65) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
         .hero h1 span {
             background: linear-gradient(135deg, var(--cyan), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .hero p { font-size: 18px; color: var(--text-dim); max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
+        .hero p {
+            font-size: 18px;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
         .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
         .btn-primary {
             padding: 14px 32px;
             background: linear-gradient(135deg, var(--cyan), var(--blue));
-            border: none; border-radius: 8px;
-            color: #000; font-weight: 600; font-size: 15px;
-            cursor: pointer; transition: all 0.3s;
+            border: none;
+            border-radius: var(--radius-md);
+            color: #000;
+            font-family: var(--body);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all var(--transition-med);
             text-decoration: none;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,212,255,0.3); }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
+        }
         .btn-secondary {
             padding: 14px 32px;
             background: var(--bg-card);
             border: 1px solid var(--bg-card-border);
-            border-radius: 8px;
-            color: var(--text); font-weight: 500; font-size: 15px;
-            cursor: pointer; transition: all 0.2s;
+            border-radius: var(--radius-md);
+            color: var(--text);
+            font-family: var(--body);
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
             text-decoration: none;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn-secondary:hover { border-color: rgba(255,255,255,0.2); }
+        .btn-secondary:hover { border-color: rgba(255, 255, 255, 0.2); background: var(--bg-card-hover); }
 
         /* Terminal preview */
         .terminal {
-            max-width: 700px; margin: 60px auto 0;
-            background: rgba(0,0,0,0.4);
+            max-width: 700px;
+            margin: 60px auto 0;
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--bg-card-border);
-            border-radius: 12px;
+            border-radius: var(--radius-lg);
             overflow: hidden;
             text-align: left;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(0, 212, 255, 0.04);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-        .terminal-bar { padding: 12px 16px; display: flex; gap: 8px; background: rgba(255,255,255,0.03); }
+        .terminal-bar {
+            padding: 14px 18px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .terminal-bar-title {
+            flex: 1;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--text-dimmer);
+            margin-right: 36px;
+        }
         .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .terminal-dot.red { background: #ff5f57; }
-        .terminal-dot.yellow { background: #febc2e; }
-        .terminal-dot.green { background: #28c840; }
+        .terminal-dot.red { background: var(--red); }
+        .terminal-dot.yellow { background: var(--yellow); }
+        .terminal-dot.green { background: var(--green); }
         .terminal-code {
-            padding: 20px;
+            padding: 24px;
             font-family: var(--mono);
             font-size: 13px;
-            line-height: 1.8;
+            line-height: 1.9;
             color: var(--text-dim);
         }
-        .terminal-code .cyan { color: var(--cyan); }
-        .terminal-code .green { color: #28c840; }
-        .terminal-code .dim { color: var(--text-dimmer); }
+        .terminal-code .prompt { color: var(--cyan); user-select: none; }
+        .terminal-code .cmd { color: #e8e8e8; }
+        .terminal-code .flag { color: var(--text-dimmer); }
+        .terminal-code .str { color: #a8e6cf; }
+        .terminal-code .keyword { color: #c792ea; }
+        .terminal-code .comment { color: var(--text-dimmer); font-style: italic; }
+        .terminal-code .border-char { color: var(--cyan); }
+        .terminal-code .status-ok { color: var(--green); }
+        .terminal-code .label { color: var(--text-dimmer); }
+        .terminal-code .url { color: var(--yellow); }
+        .terminal-line { display: flex; gap: 0; }
+        .terminal-line-num {
+            user-select: none;
+            min-width: 28px;
+            color: rgba(255, 255, 255, 0.12);
+            text-align: right;
+            padding-right: 14px;
+        }
 
         /* Features */
-        .features { padding: 80px 0; }
-        .section-label { font-family: var(--mono); font-size: 12px; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-        .section-title { font-size: 32px; font-weight: 700; margin-bottom: 48px; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .feature-card {
-            padding: 28px;
-            background: var(--bg-card);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 12px;
-            transition: all 0.3s;
+        .features { padding: 100px 0; }
+        .section-label {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
         }
-        .feature-card:hover { border-color: rgba(0,212,255,0.2); transform: translateY(-2px); }
-        .feature-icon { font-size: 28px; margin-bottom: 16px; }
-        .feature-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-        .feature-card p { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+        .section-title {
+            font-family: var(--heading);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 700;
+            margin-bottom: 56px;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .feature-card {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-lg);
+            transition: all var(--transition-med);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 212, 255, 0.06), transparent 60%);
+            opacity: 0;
+            transition: opacity var(--transition-med);
+            pointer-events: none;
+        }
+        .feature-card:hover {
+            border-color: var(--bg-card-border-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 212, 255, 0.05);
+        }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border-radius: var(--radius-md);
+            background: var(--cyan-dim);
+            color: var(--cyan);
+        }
+        .feature-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--cyan);
+            stroke-width: 1.75;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .feature-card h3 {
+            font-family: var(--heading);
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+        .feature-card p { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
 
         /* Pricing */
-        .pricing { padding: 80px 0; }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
-        .price-card {
-            padding: 32px;
-            background: var(--bg-card);
-            border: 1px solid var(--bg-card-border);
-            border-radius: 12px;
-            text-align: center;
+        .pricing { padding: 100px 0; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 920px;
+            margin: 0 auto;
+            align-items: start;
         }
-        .price-card.featured { border-color: var(--cyan); box-shadow: 0 0 40px rgba(0,212,255,0.1); }
-        .price-card h3 { font-size: 18px; margin-bottom: 4px; }
-        .price-card .price { font-size: 40px; font-weight: 700; margin: 16px 0; font-family: var(--mono); }
-        .price-card .price span { font-size: 16px; color: var(--text-dim); font-weight: 400; }
-        .price-card .desc { color: var(--text-dim); font-size: 14px; margin-bottom: 24px; }
-        .price-card ul { list-style: none; text-align: left; margin-bottom: 28px; }
-        .price-card li { padding: 6px 0; font-size: 14px; color: var(--text-dim); }
-        .price-card li::before { content: '→ '; color: var(--cyan); font-family: var(--mono); }
-        .price-card .btn-primary, .price-card .btn-secondary { width: 100%; display: block; text-align: center; }
+        .price-card {
+            padding: 36px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--bg-card-border);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all var(--transition-med);
+            position: relative;
+        }
+        .price-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        .price-card.featured {
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.08), 0 0 100px rgba(0, 212, 255, 0.04);
+            background: rgba(0, 212, 255, 0.03);
+        }
+        .price-card.featured:hover {
+            box-shadow: 0 0 50px rgba(0, 212, 255, 0.12), 0 8px 40px rgba(0, 0, 0, 0.3);
+        }
+        .price-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            border-radius: 20px;
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .price-card h3 {
+            font-family: var(--heading);
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .price-card .price {
+            font-size: 44px;
+            font-weight: 700;
+            margin: 18px 0;
+            font-family: var(--heading);
+            letter-spacing: -0.02em;
+        }
+        .price-card .price span {
+            font-size: 16px;
+            color: var(--text-dim);
+            font-weight: 400;
+            font-family: var(--body);
+        }
+        .price-card .desc { color: var(--text-dim); font-size: 14px; margin-bottom: 28px; }
+        .price-card ul { list-style: none; text-align: left; margin-bottom: 32px; }
+        .price-card li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .price-card li svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--cyan);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .price-card .btn-primary, .price-card .btn-secondary {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 48px;
+        }
 
         /* Waitlist */
-        .waitlist { padding: 80px 0; text-align: center; }
+        .waitlist { padding: 100px 0; text-align: center; }
         .waitlist-form {
-            display: flex; gap: 12px;
-            max-width: 480px; margin: 24px auto 0;
-            flex-wrap: wrap; justify-content: center;
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 28px auto 0;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .waitlist-form input {
-            flex: 1; min-width: 250px;
+            flex: 1;
+            min-width: 250px;
             padding: 14px 18px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--bg-card-border);
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             color: var(--text);
+            font-family: var(--body);
             font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+            min-height: 48px;
         }
-        .waitlist-form input:focus { border-color: var(--cyan); }
+        .waitlist-form input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
         .waitlist-form input::placeholder { color: var(--text-dimmer); }
-        .waitlist-msg { margin-top: 12px; font-size: 14px; min-height: 20px; }
+        .waitlist-form button {
+            min-height: 48px;
+            min-width: 140px;
+        }
+        .waitlist-msg { margin-top: 14px; font-size: 14px; min-height: 20px; }
 
         /* Footer */
         footer {
-            padding: 40px 0;
+            padding: 48px 0;
             border-top: 1px solid var(--bg-card-border);
             text-align: center;
         }
         footer p { color: var(--text-dimmer); font-size: 13px; }
-        footer a { color: var(--text-dim); text-decoration: none; }
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+            cursor: pointer;
+            padding: 8px 0;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
         footer a:hover { color: var(--cyan); }
-        .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; }
+        .footer-links { display: flex; gap: 28px; justify-content: center; margin-bottom: 18px; }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero { padding: 60px 0 40px; }
             .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .terminal-code { font-size: 11px; padding: 16px; }
+            .terminal-line-num { display: none; }
         }
     </style>
 </head>
 <body>
+    <div class="ambient-orb ambient-orb--1" aria-hidden="true"></div>
+    <div class="ambient-orb ambient-orb--2" aria-hidden="true"></div>
+    <div class="ambient-orb ambient-orb--3" aria-hidden="true"></div>
+
     <nav>
         <div class="container">
             <a href="/" class="logo">
-                <div class="logo-mark">ᚨ</div>
+                <div class="logo-mark">&#5765;</div>
                 <span class="logo-text">ALLSYN</span>
             </a>
             <div class="nav-links">
@@ -261,7 +612,7 @@
 
     <section class="hero">
         <div class="container">
-            <div class="hero-badge">Open-Source Core · Built by RúnTek Solutions</div>
+            <div class="hero-badge">Open-Source Core &middot; Built by R&#250;nTek Solutions</div>
             <h1>The AI orchestrator<br>you actually <span>control</span></h1>
             <p>Allsyn is a multi-model agent orchestrator with native monitoring, Discord command &amp; control, and voice integration. Open-source core. No vendor lock-in. Replace OpenClaw with something you own.</p>
             <div class="hero-cta">
@@ -273,21 +624,22 @@
                     <div class="terminal-dot red"></div>
                     <div class="terminal-dot yellow"></div>
                     <div class="terminal-dot green"></div>
+                    <span class="terminal-bar-title">allsyn &mdash; zsh</span>
                 </div>
                 <div class="terminal-code">
-                    <span class="dim">$</span> <span class="cyan">npx allsyn init</span><br>
-                    <span class="dim">$</span> <span class="cyan">npx allsyn migrate</span> <span class="dim">--from openclaw</span><br>
-                    <br>
-                    <span class="green">╔══════════════════════════════════╗</span><br>
-                    <span class="green">║&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ALLSYN v0.1.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║</span><br>
-                    <span class="green">╚══════════════════════════════════╝</span><br>
-                    <br>
-                    <span class="dim">[Orchestrator]</span> 8 agents active<br>
-                    <span class="dim">[Discord]</span> 7 gateways <span class="green">connected</span><br>
-                    <span class="dim">[API]</span> http://127.0.0.1:18900<br>
-                    <span class="dim">[Voice]</span> "Hey Allsyn" <span class="green">listening</span><br>
-                    <br>
-                    <span class="green">[Allsyn]</span> All systems operational.
+                    <div class="terminal-line"><span class="terminal-line-num">1</span><span class="prompt">$ </span><span class="cmd">npx allsyn</span> <span class="keyword">init</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">2</span><span class="prompt">$ </span><span class="cmd">npx allsyn</span> <span class="keyword">migrate</span> <span class="flag">--from openclaw</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">3</span>&nbsp;</div>
+                    <div class="terminal-line"><span class="terminal-line-num">4</span><span class="border-char">&#9556;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9559;</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">5</span><span class="border-char">&#9553;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">ALLSYN v0.1.0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="border-char">&#9553;</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">6</span><span class="border-char">&#9562;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9552;&#9565;</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">7</span>&nbsp;</div>
+                    <div class="terminal-line"><span class="terminal-line-num">8</span><span class="label">[Orchestrator]</span> 8 agents active</div>
+                    <div class="terminal-line"><span class="terminal-line-num">9</span><span class="label">[Discord]</span> 7 gateways <span class="status-ok">connected</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">10</span><span class="label">[API]</span> <span class="url">http://127.0.0.1:18900</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">11</span><span class="label">[Voice]</span> <span class="str">"Hey Allsyn"</span> <span class="status-ok">listening</span></div>
+                    <div class="terminal-line"><span class="terminal-line-num">12</span>&nbsp;</div>
+                    <div class="terminal-line"><span class="terminal-line-num">13</span><span class="status-ok">[Allsyn]</span> All systems operational.</div>
                 </div>
             </div>
         </div>
@@ -299,32 +651,44 @@
             <h2 class="section-title">Everything OpenClaw promised.<br>Actually delivered.</h2>
             <div class="feature-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
                     <h3>Multi-Model Routing</h3>
                     <p>Route to OpenAI, Anthropic, Azure, or local models per-agent. Automatic fallback when a provider fails. No vendor lock-in.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
                     <h3>Native Dashboard</h3>
-                    <p>Hlidskjálf — a native SwiftUI app for macOS and iOS. Real-time agent monitoring, event feeds, and command dispatch. No Electron bloat.</p>
+                    <p>Hlidskj&#225;lf &#8212; a native SwiftUI app for macOS and iOS. Real-time agent monitoring, event feeds, and command dispatch. No Electron bloat.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💬</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
                     <h3>Discord Command &amp; Control</h3>
                     <p>Channel-based agent routing, approval workflows, planner-to-dev handoffs. Your Discord server becomes mission control.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎙️</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                    </div>
                     <h3>Voice Integration</h3>
-                    <p>"Hey Allsyn" — speech-to-text, conversational AI, and text-to-speech. On-device processing for privacy. Discord voice channel support.</p>
+                    <p>"Hey Allsyn" &#8212; speech-to-text, conversational AI, and text-to-speech. On-device processing for privacy. Discord voice channel support.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔄</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    </div>
                     <h3>OpenClaw Migration</h3>
-                    <p>One command converts your openclaw.json to Allsyn format. Agents, routes, channels, tokens — all migrated automatically.</p>
+                    <p>One command converts your openclaw.json to Allsyn format. Agents, routes, channels, tokens &#8212; all migrated automatically.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
                     <h3>You Own It</h3>
                     <p>Apache 2.0 open-source core. Run it on your Mac, your server, your cloud. No 512 vulnerabilities. No surprise governance changes.</p>
                 </div>
@@ -334,7 +698,7 @@
 
     <section class="pricing" id="pricing">
         <div class="container">
-            <div class="section-label">Pricing</div>
+            <div class="section-label" style="text-align:center;">Pricing</div>
             <h2 class="section-title" style="text-align:center;">Start free. Scale when ready.</h2>
             <div class="pricing-grid">
                 <div class="price-card">
@@ -342,37 +706,38 @@
                     <div class="price">$0<span>/forever</span></div>
                     <div class="desc">Open-source. Self-hosted.</div>
                     <ul>
-                        <li>Multi-model routing engine</li>
-                        <li>Discord gateway</li>
-                        <li>Agent lifecycle management</li>
-                        <li>Health API</li>
-                        <li>Community support</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Multi-model routing engine</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Discord gateway</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Agent lifecycle management</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Health API</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Community support</li>
                     </ul>
                     <a href="https://github.com/allsyn-ai/allsyn-core" class="btn-secondary">Get Started</a>
                 </div>
                 <div class="price-card featured">
+                    <div class="price-badge">Most Popular</div>
                     <h3>Pro</h3>
                     <div class="price">$49<span>/mo</span></div>
                     <div class="desc">For solo founders and small teams.</div>
                     <ul>
-                        <li>Everything in Core</li>
-                        <li>Hlidskjálf dashboard (macOS + iOS)</li>
-                        <li>Voice integration</li>
-                        <li>Advanced memory &amp; context</li>
-                        <li>Priority support</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Core</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Hlidskj&#225;lf dashboard (macOS + iOS)</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Voice integration</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Advanced memory &amp; context</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
                     </ul>
-                    <a href="#" onclick="checkout('pro')" class="btn-primary">Subscribe — $49/mo</a>
+                    <a href="#" onclick="checkout('pro')" class="btn-primary">Subscribe &#8212; $49/mo</a>
                 </div>
                 <div class="price-card">
                     <h3>Enterprise</h3>
                     <div class="price">Starting at $199<span>/mo</span></div>
                     <div class="desc">For teams and agencies. Custom pricing based on needs.</div>
                     <ul>
-                        <li>Everything in Pro</li>
-                        <li>Unlimited agents</li>
-                        <li>Priority support &amp; SLA</li>
-                        <li>Custom skill development</li>
-                        <li>Dedicated onboarding</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Everything in Pro</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Unlimited agents</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Priority support &amp; SLA</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Custom skill development</li>
+                        <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Dedicated onboarding</li>
                     </ul>
                     <a href="#" onclick="checkout('enterprise')" class="btn-primary">Contact Sales</a>
                 </div>
@@ -384,7 +749,7 @@
         <div class="container">
             <div class="section-label">Early Access</div>
             <h2 class="section-title">Get in before everyone else.</h2>
-            <p style="color:var(--text-dim); max-width:500px; margin:0 auto;">Join the waitlist for early access to Allsyn Pro and the Hlidskjálf dashboard. We'll notify you when it's ready.</p>
+            <p style="color:var(--text-dim); max-width:500px; margin:0 auto;">Join the waitlist for early access to Allsyn Pro and the Hlidskj&#225;lf dashboard. We'll notify you when it's ready.</p>
             <form class="waitlist-form" id="waitlistForm">
                 <input type="email" id="email" placeholder="you@company.com" required>
                 <button type="submit" class="btn-primary">Join Waitlist</button>
@@ -398,9 +763,9 @@
             <div class="footer-links">
                 <a href="https://github.com/allsyn-ai">GitHub</a>
                 <a href="https://hlidskjalf.dev">Docs</a>
-                <a href="https://runteksolutions.com">RúnTek Solutions</a>
+                <a href="https://runteksolutions.com">R&#250;nTek Solutions</a>
             </div>
-            <p>&copy; 2026 RúnTek Solutions LLC. All rights reserved.</p>
+            <p>&copy; 2026 R&#250;nTek Solutions LLC. All rights reserved.</p>
         </div>
     </footer>
 
