@@ -1,6 +1,4 @@
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
 
@@ -9,22 +7,7 @@ const PRICE_MAP: Record<string, string> = {
   enterprise: "price_1T7SbPF45mRdAEF843eKAMwi",
 };
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    });
-  }
-
-  if (req.method !== "POST") {
-    return Response.json({ error: "Method not allowed" }, { status: 405 });
-  }
-
+export async function POST(req: Request): Promise<Response> {
   if (!STRIPE_SECRET) {
     return Response.json(
       { error: "Stripe not configured" },
@@ -47,21 +30,24 @@ export default async function handler(req: Request): Promise<Response> {
     const origin = req.headers.get("origin") || "https://allsyn.ai";
 
     // Create Stripe Checkout Session via API
-    const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${STRIPE_SECRET}`,
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: new URLSearchParams({
-        "mode": "subscription",
-        "line_items[0][price]": priceId,
-        "line_items[0][quantity]": "1",
-        "success_url": `${origin}?checkout=success`,
-        "cancel_url": `${origin}?checkout=cancel`,
-        "allow_promotion_codes": "true",
-      }).toString(),
-    });
+    const response = await fetch(
+      "https://api.stripe.com/v1/checkout/sessions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${STRIPE_SECRET}`,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          mode: "subscription",
+          "line_items[0][price]": priceId,
+          "line_items[0][quantity]": "1",
+          success_url: `${origin}?checkout=success`,
+          cancel_url: `${origin}?checkout=cancel`,
+          allow_promotion_codes: "true",
+        }).toString(),
+      }
+    );
 
     const session = await response.json();
 
@@ -84,4 +70,15 @@ export default async function handler(req: Request): Promise<Response> {
       { status: 500, headers: { "Access-Control-Allow-Origin": "*" } }
     );
   }
+}
+
+export async function OPTIONS(): Promise<Response> {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }

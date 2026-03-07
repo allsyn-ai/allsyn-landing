@@ -1,25 +1,8 @@
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
 const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
 
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
-    });
-  }
-
-  if (req.method !== "POST") {
-    return Response.json({ error: "Method not allowed" }, { status: 405 });
-  }
-
+export async function POST(req: Request): Promise<Response> {
   try {
     const body = await req.json();
     const { email, tier } = body;
@@ -98,4 +81,15 @@ export default async function handler(req: Request): Promise<Response> {
       { status: 400, headers: { "Access-Control-Allow-Origin": "*" } }
     );
   }
+}
+
+export async function OPTIONS(): Promise<Response> {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
 }
