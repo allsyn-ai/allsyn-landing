@@ -17,10 +17,15 @@ export default function ScrollReveal({
   delay = 0,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(true); // default visible for SSR
   const reduced = useReducedMotion();
 
   useEffect(() => {
+    // On mount, hide elements so they can animate in
+    setMounted(true);
+    setVisible(false);
+
     if (reduced) {
       setVisible(true);
       return;
@@ -39,7 +44,11 @@ export default function ScrollReveal({
       { threshold: 0.1 }
     );
 
-    observer.observe(el);
+    // Small delay to ensure the hidden state is painted before observing
+    requestAnimationFrame(() => {
+      observer.observe(el);
+    });
+
     return () => observer.disconnect();
   }, [reduced]);
 
@@ -53,12 +62,12 @@ export default function ScrollReveal({
     <div
       ref={ref}
       className={className}
-      style={{
+      style={mounted ? {
         opacity: visible ? 1 : 0,
         transform: visible ? "translate(0, 0)" : translateMap[direction],
         transition: `opacity 600ms ease ${delay}ms, transform 600ms ease ${delay}ms`,
         willChange: "opacity, transform",
-      }}
+      } : {}}
     >
       {children}
     </div>
