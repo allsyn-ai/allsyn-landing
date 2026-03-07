@@ -7,7 +7,7 @@ import ScrollReveal from "./effects/ScrollReveal";
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [messageColor, setMessageColor] = useState("");
+  const [isError, setIsError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Waitlist() {
       setMessage(
         "Payment successful! Welcome to Allsyn. We'll be in touch with your access details."
       );
-      setMessageColor("var(--color-green)");
+      setIsError(false);
     }
   }, []);
 
@@ -26,7 +26,7 @@ export default function Waitlist() {
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       setMessage("Please enter a valid email.");
-      setMessageColor("var(--color-error)");
+      setIsError(true);
       return;
     }
 
@@ -43,15 +43,15 @@ export default function Waitlist() {
 
       if (data.success) {
         setMessage(data.message);
-        setMessageColor("var(--color-green)");
+        setIsError(false);
         setEmail("");
       } else {
         setMessage(data.error || "Something went wrong.");
-        setMessageColor("var(--color-error)");
+        setIsError(true);
       }
     } catch {
       setMessage("Network error. Please try again.");
-      setMessageColor("var(--color-error)");
+      setIsError(true);
     } finally {
       setSubmitting(false);
     }
@@ -60,41 +60,32 @@ export default function Waitlist() {
   return (
     <section className="py-24 lg:py-32 text-center" id="waitlist">
       <div className="max-w-7xl mx-auto px-6">
-        <ScrollReveal>
-          <div
-            className="text-xs tracking-[3px] uppercase mb-6"
-            style={{
-              fontFamily: "var(--font-mono)",
-              color: "var(--color-cyan)",
-            }}
-          >
-            Early Access
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={100}>
-          <h2
-            className="font-bold mb-6 tracking-[-0.01em] leading-[1.2]"
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(28px, 4vw, 36px)",
-            }}
-          >
-            Get in before everyone else.
-          </h2>
-        </ScrollReveal>
-        <ScrollReveal delay={200}>
-          <p
-            className="max-w-[540px] mx-auto mb-10"
-            style={{ color: "var(--color-text-dim)" }}
-          >
-            Join the waitlist for early access to Allsyn Pro and the
-            Hlidskj&aacute;lf dashboard. We&apos;ll notify you when it&apos;s
-            ready.
-          </p>
-        </ScrollReveal>
+        <div className="text-center mb-20">
+          <ScrollReveal>
+            <div
+              className="text-xs tracking-[3px] uppercase mb-6 text-cyan"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Early Access
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-6">
+              Get in before everyone else.
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={200}>
+            <p className="text-text-dim max-w-xl mx-auto leading-relaxed">
+              Join the waitlist for early access to Allsyn Pro and the
+              Hlidskj&aacute;lf dashboard. We&apos;ll notify you when
+              it&apos;s ready.
+            </p>
+          </ScrollReveal>
+        </div>
+
         <ScrollReveal delay={300}>
           <form
-            className="waitlist-form flex gap-3 max-w-[540px] mx-auto mt-10 flex-wrap justify-center"
+            className="flex gap-3 max-w-lg mx-auto flex-wrap justify-center"
             onSubmit={handleSubmit}
           >
             <input
@@ -103,24 +94,36 @@ export default function Waitlist() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 min-w-[250px] px-5 py-4 rounded-xl text-[15px] text-text outline-none transition-all duration-200"
+              style={{
+                background: "rgba(255, 255, 255, 0.05)",
+                border: "1px solid var(--border)",
+                fontFamily: "var(--font-body)",
+              }}
             />
             <MagneticButton>
               <button
                 type="submit"
-                className="btn-primary"
                 disabled={submitting}
-                style={{ minHeight: "48px", minWidth: "140px" }}
+                className="px-8 py-4 rounded-xl font-semibold text-[15px] text-black cursor-pointer transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60"
+                style={{
+                  background: "linear-gradient(135deg, var(--cyan), var(--blue))",
+                  boxShadow: "0 4px 20px rgba(0, 212, 255, 0.25)",
+                  border: "none",
+                }}
               >
                 {submitting ? "Joining..." : "Join Waitlist"}
               </button>
             </MagneticButton>
           </form>
-          <div
-            className="mt-3.5 text-sm min-h-5"
-            style={{ color: messageColor }}
-          >
-            {message}
-          </div>
+          {message && (
+            <div
+              className="mt-4 text-sm"
+              style={{ color: isError ? "#ff9ea4" : "var(--green)" }}
+            >
+              {message}
+            </div>
+          )}
         </ScrollReveal>
       </div>
     </section>

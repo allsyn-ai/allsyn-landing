@@ -1,24 +1,69 @@
 "use client";
 
+import { Check } from "lucide-react";
 import TiltCard from "./effects/TiltCard";
 import MagneticButton from "./effects/MagneticButton";
 import ScrollReveal from "./effects/ScrollReveal";
 
-const CheckIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    className="w-4 h-4 shrink-0"
-    style={{
-      stroke: "var(--color-cyan)",
-      strokeWidth: 2,
-      fill: "none",
-      strokeLinecap: "round",
-      strokeLinejoin: "round",
-    }}
-  >
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
+interface PriceTier {
+  name: string;
+  price: string;
+  period: string;
+  subtitle: string;
+  features: string[];
+  cta: string;
+  featured?: boolean;
+  action: "github" | "checkout-pro" | "checkout-enterprise";
+}
+
+const tiers: PriceTier[] = [
+  {
+    name: "Core",
+    price: "$0",
+    period: "/forever",
+    subtitle: "Open-source. Self-hosted.",
+    features: [
+      "Multi-model routing engine",
+      "Discord gateway",
+      "Agent lifecycle management",
+      "Health API",
+      "Community support",
+    ],
+    cta: "Get Started",
+    action: "github",
+  },
+  {
+    name: "Pro",
+    price: "$49",
+    period: "/mo",
+    subtitle: "For solo founders and small teams.",
+    features: [
+      "Everything in Core",
+      "Hlidskj\u00e1lf dashboard (macOS + iOS)",
+      "Voice integration",
+      "Advanced memory & context",
+      "Priority support",
+    ],
+    cta: "Subscribe \u2014 $49/mo",
+    featured: true,
+    action: "checkout-pro",
+  },
+  {
+    name: "Enterprise",
+    price: "$199",
+    period: "/mo",
+    subtitle: "For teams and agencies. Custom plans available.",
+    features: [
+      "Everything in Pro",
+      "Unlimited agents",
+      "Priority support & SLA",
+      "Custom skill development",
+      "Dedicated onboarding",
+    ],
+    cta: "Contact Sales",
+    action: "checkout-enterprise",
+  },
+];
 
 export default function Pricing() {
   async function checkout(tier: string) {
@@ -42,278 +87,92 @@ export default function Pricing() {
   return (
     <section className="py-24 lg:py-32" id="pricing">
       <div className="max-w-7xl mx-auto px-6">
-        <ScrollReveal>
-          <div
-            className="text-xs tracking-[3px] uppercase mb-6 text-center"
-            style={{
-              fontFamily: "var(--font-mono)",
-              color: "var(--color-cyan)",
-            }}
-          >
-            Pricing
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={100}>
-          <h2
-            className="text-3xl sm:text-4xl font-bold mb-16 tracking-[-0.02em] leading-[1.15] text-center"
-            style={{ fontFamily: "var(--font-heading)" }}
-          >
-            Start free. Scale when ready.
-          </h2>
-        </ScrollReveal>
-        <div className="pricing-grid grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          {/* Core */}
-          <ScrollReveal delay={150}>
-            <TiltCard intensity={6}>
-              <div className="price-card">
-                <h3
-                  className="text-xl mb-1"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  Core
-                </h3>
-                <div
-                  className="text-[44px] font-bold my-4.5 tracking-[-0.02em]"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  $0
-                  <span
-                    className="text-base font-normal"
-                    style={{
-                      color: "var(--color-text-dim)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    /forever
-                  </span>
-                </div>
-                <div
-                  className="text-sm mb-7"
-                  style={{ color: "var(--color-text-dim)" }}
-                >
-                  Open-source. Self-hosted.
-                </div>
-                <ul className="list-none text-left mb-8">
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Multi-model routing engine
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Discord gateway
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Agent lifecycle management
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Health API
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Community support
-                  </li>
-                </ul>
-                <MagneticButton className="w-full">
-                  <a
-                    href="https://github.com/allsyn-ai/allsyn-core"
-                    className="btn-secondary"
-                    style={{ width: "100%", minHeight: "48px" }}
-                  >
-                    Get Started
-                  </a>
-                </MagneticButton>
-              </div>
-            </TiltCard>
+        <div className="text-center mb-20">
+          <ScrollReveal>
+            <div
+              className="text-xs tracking-[3px] uppercase mb-6 text-cyan"
+              style={{ fontFamily: "var(--font-mono)" }}
+            >
+              Pricing
+            </div>
           </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Start free. Scale when ready.
+            </h2>
+          </ScrollReveal>
+        </div>
 
-          {/* Pro */}
-          <ScrollReveal delay={250}>
-            <TiltCard intensity={6}>
-              <div className="price-card featured">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-start">
+          {tiers.map((tier, i) => (
+            <ScrollReveal key={tier.name} delay={150 + i * 100}>
+              <TiltCard intensity={6}>
                 <div
-                  className="inline-block px-3.5 py-1 rounded-[20px] text-[11px] font-semibold text-black mb-4 tracking-[1px] uppercase"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, var(--color-cyan), var(--color-blue))",
-                    fontFamily: "var(--font-mono)",
-                  }}
+                  className={`p-8 lg:p-10 rounded-xl glass-card text-center h-full ${
+                    tier.featured
+                      ? "border-border-accent shadow-[0_0_50px_rgba(0,212,255,0.08)]"
+                      : ""
+                  }`}
+                  style={tier.featured ? { background: "rgba(0, 212, 255, 0.03)" } : {}}
                 >
-                  Most Popular
-                </div>
-                <h3
-                  className="text-xl mb-1"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  Pro
-                </h3>
-                <div
-                  className="text-[44px] font-bold my-4.5 tracking-[-0.02em]"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  $49
-                  <span
-                    className="text-base font-normal"
-                    style={{
-                      color: "var(--color-text-dim)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    /mo
-                  </span>
-                </div>
-                <div
-                  className="text-sm mb-7"
-                  style={{ color: "var(--color-text-dim)" }}
-                >
-                  For solo founders and small teams.
-                </div>
-                <ul className="list-none text-left mb-8">
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Everything in Core
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Hlidskj&aacute;lf dashboard (macOS + iOS)
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Voice integration
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Advanced memory &amp; context
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Priority support
-                  </li>
-                </ul>
-                <MagneticButton className="w-full">
-                  <button
-                    onClick={() => checkout("pro")}
-                    className="btn-primary"
-                    style={{ width: "100%", minHeight: "48px" }}
-                  >
-                    Subscribe &mdash; $49/mo
-                  </button>
-                </MagneticButton>
-              </div>
-            </TiltCard>
-          </ScrollReveal>
+                  {tier.featured && (
+                    <div
+                      className="inline-block px-4 py-1 rounded-full text-[11px] font-semibold text-black mb-5 tracking-[1px] uppercase"
+                      style={{
+                        background: "linear-gradient(135deg, var(--cyan), var(--blue))",
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      Most Popular
+                    </div>
+                  )}
 
-          {/* Enterprise */}
-          <ScrollReveal delay={350}>
-            <TiltCard intensity={6}>
-              <div className="price-card">
-                <h3
-                  className="text-xl mb-1"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  Enterprise
-                </h3>
-                <div
-                  className="text-[44px] font-bold my-4.5 tracking-[-0.02em]"
-                  style={{ fontFamily: "var(--font-heading)" }}
-                >
-                  $199
-                  <span
-                    className="text-base font-normal"
-                    style={{
-                      color: "var(--color-text-dim)",
-                      fontFamily: "var(--font-body)",
-                    }}
-                  >
-                    /mo
-                  </span>
+                  <h3 className="text-xl mb-2">{tier.name}</h3>
+
+                  <div className="text-[44px] font-bold my-4 tracking-tight">
+                    {tier.price}
+                    <span className="text-base font-normal text-text-dim" style={{ fontFamily: "var(--font-body)" }}>
+                      {tier.period}
+                    </span>
+                  </div>
+
+                  <p className="text-sm text-text-dim mb-8">{tier.subtitle}</p>
+
+                  <ul className="text-left space-y-3 mb-10">
+                    {tier.features.map((feat) => (
+                      <li key={feat} className="flex items-center gap-3 text-sm text-text-dim">
+                        <Check className="w-4 h-4 text-cyan shrink-0" />
+                        {feat}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <MagneticButton className="w-full">
+                    {tier.action === "github" ? (
+                      <a
+                        href="https://github.com/allsyn-ai/allsyn-core"
+                        className="w-full py-4 rounded-xl font-medium text-[15px] text-text glass-card inline-flex items-center justify-center hover:border-border-hover transition-all duration-200"
+                      >
+                        {tier.cta}
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => checkout(tier.action === "checkout-pro" ? "pro" : "enterprise")}
+                        className="w-full py-4 rounded-xl font-semibold text-[15px] text-black inline-flex items-center justify-center cursor-pointer transition-all duration-200 hover:-translate-y-0.5"
+                        style={{
+                          background: "linear-gradient(135deg, var(--cyan), var(--blue))",
+                          boxShadow: "0 4px 20px rgba(0, 212, 255, 0.2)",
+                          border: "none",
+                        }}
+                      >
+                        {tier.cta}
+                      </button>
+                    )}
+                  </MagneticButton>
                 </div>
-                <div
-                  className="text-sm mb-7"
-                  style={{ color: "var(--color-text-dim)" }}
-                >
-                  For teams and agencies. Custom plans available.
-                </div>
-                <ul className="list-none text-left mb-8">
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Everything in Pro
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Unlimited agents
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Priority support &amp; SLA
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Custom skill development
-                  </li>
-                  <li
-                    className="py-2 text-sm flex items-center gap-2.5"
-                    style={{ color: "var(--color-text-dim)" }}
-                  >
-                    <CheckIcon />
-                    Dedicated onboarding
-                  </li>
-                </ul>
-                <MagneticButton className="w-full">
-                  <button
-                    onClick={() => checkout("enterprise")}
-                    className="btn-primary"
-                    style={{ width: "100%", minHeight: "48px" }}
-                  >
-                    Contact Sales
-                  </button>
-                </MagneticButton>
-              </div>
-            </TiltCard>
-          </ScrollReveal>
+              </TiltCard>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>
