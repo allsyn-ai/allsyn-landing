@@ -74,7 +74,7 @@ export default function Features() {
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div
-            className="text-xs tracking-[3px] uppercase mb-5 text-center"
+            className="text-xs tracking-[3px] uppercase mb-6 text-center"
             style={{
               fontFamily: "var(--font-mono)",
               color: "var(--color-cyan)",
@@ -85,11 +85,8 @@ export default function Features() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h2
-            className="font-bold mb-16 tracking-[-0.02em] leading-[1.15] text-center"
-            style={{
-              fontFamily: "var(--font-heading)",
-              fontSize: "clamp(30px, 4.5vw, 42px)",
-            }}
+            className="text-3xl sm:text-4xl font-bold mb-16 tracking-[-0.02em] leading-[1.15] text-center"
+            style={{ fontFamily: "var(--font-heading)" }}
           >
             Everything OpenClaw promised.
             <br />

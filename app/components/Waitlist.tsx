@@ -62,7 +62,7 @@ export default function Waitlist() {
       <div className="max-w-7xl mx-auto px-6">
         <ScrollReveal>
           <div
-            className="text-xs tracking-[3px] uppercase mb-3.5"
+            className="text-xs tracking-[3px] uppercase mb-6"
             style={{
               fontFamily: "var(--font-mono)",
               color: "var(--color-cyan)",
@@ -73,7 +73,7 @@ export default function Waitlist() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h2
-            className="font-bold mb-14 tracking-[-0.01em] leading-[1.2]"
+            className="font-bold mb-6 tracking-[-0.01em] leading-[1.2]"
             style={{
               fontFamily: "var(--font-heading)",
               fontSize: "clamp(28px, 4vw, 36px)",
@@ -84,7 +84,7 @@ export default function Waitlist() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="max-w-[500px] mx-auto mb-0"
+            className="max-w-[540px] mx-auto mb-10"
             style={{ color: "var(--color-text-dim)" }}
           >
             Join the waitlist for early access to Allsyn Pro and the

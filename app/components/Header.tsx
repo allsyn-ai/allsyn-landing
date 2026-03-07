@@ -73,7 +73,7 @@ export default function Header() {
           <MagneticButton>
             <a
               href="#waitlist"
-              className="px-5.5 py-2.5 rounded-md text-[13px] font-semibold cursor-pointer no-underline min-h-11 flex items-center transition-all duration-200"
+              className="px-7 py-3 rounded-md text-[13px] font-semibold cursor-pointer no-underline min-h-11 flex items-center transition-all duration-200"
               style={{
                 background: "var(--color-cyan-dim)",
                 border: "1px solid rgba(0, 212, 255, 0.3)",

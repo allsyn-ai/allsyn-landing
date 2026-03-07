@@ -48,7 +48,7 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-[1.1] tracking-[-0.03em]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-[-0.03em]"
             style={{
               fontFamily: "var(--font-heading)",
               background:
@@ -76,7 +76,7 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
             style={{ color: "var(--color-text-dim)" }}
           >
             Multi-model routing, native monitoring, Discord&nbsp;C2, and
