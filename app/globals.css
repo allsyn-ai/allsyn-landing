@@ -164,7 +164,7 @@ body {
 /* Terminal */
 .terminal {
   max-width: 700px;
-  margin: 60px auto 0;
+  margin: 80px auto 0;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);
@@ -226,7 +226,7 @@ body {
 
 /* Feature cards */
 .feature-card {
-  padding: 36px;
+  padding: 40px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--color-bg-card-border);
   border-radius: var(--radius-lg);

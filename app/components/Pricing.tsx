@@ -40,7 +40,7 @@ export default function Pricing() {
   }
 
   return (
-    <section className="py-[100px]" id="pricing">
+    <section className="py-[120px]" id="pricing">
       <div className="container">
         <ScrollReveal>
           <div

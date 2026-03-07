@@ -70,7 +70,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-[100px]" id="features">
+    <section className="py-[120px]" id="features">
       <div className="container">
         <ScrollReveal>
           <div

@@ -8,7 +8,7 @@ import ScrollReveal from "./effects/ScrollReveal";
 
 export default function Hero() {
   return (
-    <section className="hero-section relative py-[100px] pb-20 text-center">
+    <section className="hero-section relative pt-[120px] pb-[100px] text-center">
       {/* Dot grid background */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -48,7 +48,7 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <h1
-            className="font-bold mb-5.5 leading-[1.08] tracking-[-0.02em]"
+            className="font-bold mb-8 leading-[1.1] tracking-[-0.02em]"
             style={{
               fontFamily: "var(--font-heading)",
               fontSize: "clamp(38px, 6vw, 68px)",
@@ -77,7 +77,7 @@ export default function Hero() {
         </ScrollReveal>
         <ScrollReveal delay={200}>
           <p
-            className="text-lg max-w-[600px] mx-auto mb-4 leading-[1.8]"
+            className="text-lg max-w-[620px] mx-auto mb-5 leading-[1.85]"
             style={{ color: "var(--color-text-dim)" }}
           >
             Allsyn is a multi-model agent orchestrator with native monitoring,
@@ -85,7 +85,7 @@ export default function Hero() {
             core.
           </p>
           <p
-            className="text-lg max-w-[600px] mx-auto mb-12 leading-[1.8]"
+            className="text-lg max-w-[620px] mx-auto mb-14 leading-[1.85]"
             style={{ color: "var(--color-text-dim)" }}
           >
             No vendor lock-in. Replace OpenClaw with something you own.

@@ -58,7 +58,7 @@ export default function Waitlist() {
   }
 
   return (
-    <section className="py-[100px] text-center" id="waitlist">
+    <section className="py-[120px] text-center" id="waitlist">
       <div className="container">
         <ScrollReveal>
           <div
